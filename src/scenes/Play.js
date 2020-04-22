@@ -39,7 +39,7 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        this.road.tilePositionY -= 2;
+        this.road.tilePositionY -= 4;
 
         if(!this.gameOver){
             this.p1Wheel.update();
