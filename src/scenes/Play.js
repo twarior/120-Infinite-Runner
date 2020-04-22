@@ -19,12 +19,21 @@ class Play extends Phaser.Scene {
             .setScale(1, 1).setOrigin(0, 0);
 
         //cars
-        this.slingShot = new Car(this, game.config.width/2, 50, 'slingshot', 0, 5)
-            .setOrigin(0,0).setScale(1,1);
+        this.slingShot01 = new Car(this, game.config.width/2 - 30, 0, 'slingshot', 0, 
+            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+        this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -50, 'slingshot', 0, 
+            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+        this.slingShot03 = new Car(this, 1*game.config.width/4, -120, 'slingshot', 0, 
+            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+        this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -300, 'slingshot', 0, 
+            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -500, 'slingshot', 0, 
+            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         //game over flag
         this.gameOver = false;
     }
@@ -34,12 +43,43 @@ class Play extends Phaser.Scene {
 
         if(!this.gameOver){
             this.p1Wheel.update();
-            this.slingShot.update();
+            this.slingShot01.update();
+            this.slingShot02.update();
+            this.slingShot03.update();
+            this.slingShot04.update();
+            this.slingShot05.update();
         }
 
-        if(this.checkCollision(this.p1Wheel, this.slingShot)){
+        if(this.checkCollision(this.p1Wheel, this.slingShot01)){
             this.gameOver = true;
-            //console.log('game over!');
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+        }
+        if(this.checkCollision(this.p1Wheel, this.slingShot02)){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+        }
+        if(this.checkCollision(this.p1Wheel, this.slingShot03)){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+        }
+        if(this.checkCollision(this.p1Wheel, this.slingShot04)){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+        }
+        if(this.checkCollision(this.p1Wheel, this.slingShot05)){
+            this.gameOver = true;
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+        }
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
+            this.scene.start("menuScene");
+        } 
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
+            this.scene.restart(0);
         }
     }
 
@@ -53,6 +93,10 @@ class Play extends Phaser.Scene {
         } else {
             return false;
         }
+    }
+
+    EndOfLine(){
+        
     }
 
 }

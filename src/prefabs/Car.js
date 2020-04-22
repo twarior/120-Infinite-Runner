@@ -18,7 +18,19 @@ class Car extends Phaser.GameObjects.Sprite {
     }
 
     reset() {
-        this.y = 0;
+        this.y = -this.height -(Math.random()*200);
+        let randoX = Math.random()*100;
+        if(randoX > 50){
+            randoX = randoX - 100;
+        }
+        this.x += randoX;
+        if(this.x > game.config.width) {
+            this.x = game.config.width;
+        }
+        if(this.x < 0){
+            this.x = 0;
+        }
+        
     }
 
 }
