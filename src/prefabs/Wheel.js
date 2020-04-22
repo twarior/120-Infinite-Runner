@@ -13,7 +13,7 @@ class Wheel extends Phaser.GameObjects.Sprite {
         if(keyLEFT.isDown && this.x >= 47){
             this.x -= 5;
         }
-        if(keyRIGHT.isDown && this.x <= 578) {
+        if(keyRIGHT.isDown && this.x <= game.config.width -62) {
             this.x += 5;
         }
     }

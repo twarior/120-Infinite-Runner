@@ -15,7 +15,7 @@ class Menu extends Phaser.Scene {
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
-            align: 'right',
+            align: 'center',
             padding: {
                 top: 5,
                 bottom: 5,
@@ -29,7 +29,7 @@ class Menu extends Phaser.Scene {
         let textSpacer = 64;
 
         this.add.text(centerX, centerY - textSpacer, 'FIRE TIRES', menuConfig).setOrigin(.5);
-        this.add.text(centerX, centerY, 'Use ↔ arrows to move./n Survive for as long as you can.', menuConfig).setOrigin(.5);
+        this.add.text(centerX, centerY, 'Use ↔ arrows to move\n Survive for as long as you can', menuConfig).setOrigin(.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.config = '#000';
         this.add.text(centerX, centerY + textSpacer, 'Press UP to Start', menuConfig).setOrigin(.5);
