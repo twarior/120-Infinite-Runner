@@ -10,7 +10,7 @@ class Car extends Phaser.GameObjects.Sprite {
 
     update() {
         //move car down
-        this.y -= this.speed;
+        this.y += this.speed;
         //wrap around screen bounds
         if(this.y >= game.config.height){
             this.reset();

@@ -16,10 +16,11 @@ class Play extends Phaser.Scene {
 
         //player 1 wheel, almost certainly no player 2
         this.p1Wheel = new Wheel(this, game.config.width/2, 800, 'wheel')
-        .setScale(2, 2).setOrigin(0, 0);
+            .setScale(1, 1).setOrigin(0, 0);
 
         //cars
-        this.slingShot = new Car(this, 270, game.config.height, 'slingshot', game.settings.carSpeed);
+        this.slingShot = new Car(this, game.config.width/2, 50, 'slingshot', 0, 5)
+            .setOrigin(0,0).setScale(1,1);
 
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -38,16 +39,16 @@ class Play extends Phaser.Scene {
 
         if(this.checkCollision(this.p1Wheel, this.slingShot)){
             this.gameOver = true;
-            console.log('game over!');
+            //console.log('game over!');
         }
     }
 
     checkCollision(wheel, car) {
         // simple AABB checking
-        if (wheel.y < car.y + car.width && 
-            wheel.y + wheel.width > car.y && 
-            wheel.x < car.x + car.height &&
-            wheel.height + wheel.x > car. x) {
+        if (wheel.y < car.y + car.height && 
+            wheel.y + wheel.height > car.y && 
+            wheel.x < car.x + car.width &&
+            wheel.width + wheel.x > car. x) {
                 return true;
         } else {
             return false;
