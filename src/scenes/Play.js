@@ -30,13 +30,24 @@ class Play extends Phaser.Scene {
         this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
 
+        this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
+        
+        //key inputs for moving, and restarting or going to menu
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        
         //game over flag
         this.gameOver = false;
+    
+        //arcade physics
+        
+    
+    
     }
+    
+    
 
     update() {
         this.road.tilePositionY -= 4;
@@ -50,30 +61,22 @@ class Play extends Phaser.Scene {
             this.slingShot05.update();
         }
 
+        this.checkOverlap();
+
         if(this.checkCollision(this.p1Wheel, this.slingShot01)){
-            this.gameOver = true;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+            this.EndOfLine();
         }
         if(this.checkCollision(this.p1Wheel, this.slingShot02)){
-            this.gameOver = true;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+            this.EndOfLine();
         }
         if(this.checkCollision(this.p1Wheel, this.slingShot03)){
-            this.gameOver = true;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+            this.EndOfLine();
         }
         if(this.checkCollision(this.p1Wheel, this.slingShot04)){
-            this.gameOver = true;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+            this.EndOfLine();
         }
         if(this.checkCollision(this.p1Wheel, this.slingShot05)){
-            this.gameOver = true;
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
-            this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+            this.EndOfLine();
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.scene.start("menuScene");
@@ -96,7 +99,24 @@ class Play extends Phaser.Scene {
     }
 
     EndOfLine(){
-        
+        this.gameOver = true;
+        this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+    }
+
+    checkOverlap() {
+        for(let i = 0; i < this.carsArray.length; i ++){
+            for(let j = 0; j < this.carsArray.length; j ++){
+                if(i != j){
+                    let carA = this.carsArray[i];
+                    let carB = this.carsArray[j];
+                    if(this.checkCollision(carA, carB)){
+                        carB.reset();
+                        console.log('car collision has occured and attempted to reset')
+                    }
+                }
+            }
+        }
     }
 
 }
