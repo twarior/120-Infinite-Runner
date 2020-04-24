@@ -6,8 +6,11 @@ class Play extends Phaser.Scene {
     preload() {
         //load images and tile sprite if any
         this.load.image('slingshot', './assets/SlingShot.png');
+        this.laod.image('deoraII', './assets/DeoraII.png');
         this.load.image('road', './assets/Road.png');
         this.load.image('wheel', './assets/Wheel.png');
+        this.load.image('rock', './assets/Rock.png');
+        this.load.image('pothole', './assets/Pothole.png');
     }
 
     create() {
@@ -19,19 +22,33 @@ class Play extends Phaser.Scene {
             .setScale(1, 1).setOrigin(0, 0);
 
         //cars
-        this.slingShot01 = new Car(this, game.config.width/2 - 30, 0, 'slingshot', 0, 
+        this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
-        this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -690, 'slingshot', 0, 
+        this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -690, 'deoraII', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
         this.slingShot03 = new Car(this, 1*game.config.width/4, -320, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
-        this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -500, 'slingshot', 0, 
+        this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -500, 'deoraII', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
         this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
 
         this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
-        
+
+        //other obstacles
+        this.rock01 = new Car(this, game.config.width/2 - 30, 0, 'rock', 0, 
+            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+        this.pothole01 = new Car(this, 3*game.config.width/4 + 20, -690, 'pothole', 0, 
+            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+        this.rock02 = new Car(this, 1*game.config.width/4, -320, 'rock', 0, 
+            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+        this.pothole02 = new Car(this, 3*game.config.width/4 - 50, -500, 'pothole', 0, 
+            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+        this.rock03 = new Car(this, 1*game.config.width/4 - 90, -1000, 'rock', 0, 
+            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+
+        this.obstacleArray = [this.rock01, this.rock02, this.rock03, this.pothole01, this.pothole02];
+
         //key inputs for moving, and restarting or going to menu
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
@@ -50,7 +67,32 @@ class Play extends Phaser.Scene {
         //     callbackScope: thisArg,
         //     loop: true
         // });
-    
+        
+        //timed event
+        this.thirySeconds = false;
+
+        this.clock = this.time.delayedCall(10000, () => {
+            this.thirySeconds = true;
+            this.rock01.destroy();
+            this.rock02.destroy();
+            this.rock03.destroy();
+            this.pothole01.destroy();
+            this.pothole02.destroy();
+        });
+
+        this.clock = this.time.delayedCall(20000, () => {
+            this.addSpeedToObs(this.carsArray);
+            console.log('spped up 1');
+        });
+
+        this.clock = this.time.delayedCall(30000, () => {
+            this.addSpeedToObs(this.carsArray);
+            console.log('spped up 2');
+        });
+        this.clock = this.time.delayedCall(40000, () => {
+            this.addSpeedToObs(this.carsArray);
+            console.log('spped up 3');
+        });
     
     }
     
@@ -58,17 +100,27 @@ class Play extends Phaser.Scene {
     update() {
         
 
-        if(!this.gameOver){
-            this.road.tilePositionY -= 4;
+        if(!this.gameOver && this.thirySeconds == true){
+            this.road.tilePositionY -= game.settings.roadSpeed;
             this.p1Wheel.update();
             this.slingShot01.update();
             this.slingShot02.update();
             this.slingShot03.update();
             this.slingShot04.update();
             this.slingShot05.update();
+            this.checkOverlap(this.carsArray);
         }
-
-        this.checkOverlap();
+        if(!this.gameOver && this.thirySeconds == false){
+            this.road.tilePositionY -= game.settings.roadSpeed;
+            this.p1Wheel.update();
+            this.rock01.update();
+            this.rock02.update();
+            this.rock03.update();
+            this.pothole01.update();
+            this.pothole02.update();
+            this.checkOverlap(this.obstacleArray);
+        }
+        
 
         if(this.checkCollision(this.p1Wheel, this.slingShot01)){
             this.EndOfLine();
@@ -113,15 +165,15 @@ class Play extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu')
             .setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'You passed ' + game.settings.gameScore
-             + ' cars!').setOrigin(.5);
+             + ' obstacles!').setOrigin(.5);
     }
 
-    checkOverlap() {
-        for(let i = 0; i < this.carsArray.length; i ++){
-            for(let j = 0; j < this.carsArray.length; j ++){
+    checkOverlap(array) {
+        for(let i = 0; i < array.length; i ++){
+            for(let j = 0; j < array.length; j ++){
                 if(i != j){
-                    let carA = this.carsArray[i];
-                    let carB = this.carsArray[j];
+                    let carA = array[i];
+                    let carB = array[j];
                     if(this.checkCollision(carA, carB)){
                         carB.reset(0);
                         //console.log('car collision has occured and attempted to reset');
@@ -129,6 +181,13 @@ class Play extends Phaser.Scene {
                     }
                 }
             }
+        }
+    }
+
+    addSpeedToObs(array){
+        for(let i = 0; i < array.length; i++){
+            let obs = array[i];
+            obs.speed += 3;
         }
     }
 
