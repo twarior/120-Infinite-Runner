@@ -137,6 +137,21 @@ class Play extends Phaser.Scene {
         if(this.checkCollision(this.p1Wheel, this.slingShot05)){
             this.EndOfLine();
         }
+        if(this.checkCollision(this.p1Wheel, this.rock01)){
+            this.EndOfLine();
+        }
+        if(this.checkCollision(this.p1Wheel, this.rock02)){
+            this.EndOfLine();
+        }
+        if(this.checkCollision(this.p1Wheel, this.rock03)){
+            this.EndOfLine();
+        }
+        if(this.checkCollision(this.p1Wheel, this.pothole01)){
+            this.EndOfLine();
+        }
+        if(this.checkCollision(this.p1Wheel, this.pothole02)){
+            this.EndOfLine();
+        }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.scene.start("menuScene");
         } 
