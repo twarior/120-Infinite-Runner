@@ -72,12 +72,13 @@ class Play extends Phaser.Scene {
         this.thirySeconds = false;
 
         this.clock = this.time.delayedCall(10000, () => {
-            this.thirySeconds = true;
             this.rock01.destroy();
             this.rock02.destroy();
             this.rock03.destroy();
             this.pothole01.destroy();
             this.pothole02.destroy();
+            this.thirySeconds = true;
+            
         });
 
         this.clock = this.time.delayedCall(20000, () => {
