@@ -43,10 +43,16 @@ class Play extends Phaser.Scene {
     
         //arcade physics
         
+        // this.timer = scene.time.addEvent({
+        //     delay: 1000,
+        //     callback: callback,
+        //     //args: [],
+        //     callbackScope: thisArg,
+        //     loop: true
+        // });
     
     
     }
-    
     
 
     update() {
@@ -82,7 +88,8 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         } 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
-            this.scene.restart(0);
+            game.settings.gameScore = 0;
+            this.scene.restart(game.settings.gameScore);
         }
     }
 
@@ -100,8 +107,12 @@ class Play extends Phaser.Scene {
 
     EndOfLine(){
         this.gameOver = true;
-        this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER').setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu').setOrigin(0.5);
+        //let score = timer.getElapsedSeconds();
+        this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER').setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu')
+            .setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2, 'You passed ' + game.settings.gameScore
+             + ' cars!').setOrigin(.5);
     }
 
     checkOverlap() {
@@ -111,8 +122,9 @@ class Play extends Phaser.Scene {
                     let carA = this.carsArray[i];
                     let carB = this.carsArray[j];
                     if(this.checkCollision(carA, carB)){
-                        carB.reset();
-                        console.log('car collision has occured and attempted to reset')
+                        carB.reset(0);
+                        //console.log('car collision has occured and attempted to reset');
+                        //game.settings.gameScore -= 1;
                     }
                 }
             }
