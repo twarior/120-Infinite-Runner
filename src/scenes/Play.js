@@ -6,7 +6,7 @@ class Play extends Phaser.Scene {
     preload() {
         //load images and tile sprite if any
         this.load.image('slingshot', './assets/SlingShot.png');
-        this.laod.image('deoraII', './assets/DeoraII.png');
+        this.load.image('deoraII', './assets/DeoraII.png');
         this.load.image('road', './assets/Road.png');
         this.load.image('wheel', './assets/Wheel.png');
         this.load.image('rock', './assets/Rock.png');
