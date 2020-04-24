@@ -56,9 +56,10 @@ class Play extends Phaser.Scene {
     
 
     update() {
-        this.road.tilePositionY -= 4;
+        
 
         if(!this.gameOver){
+            this.road.tilePositionY -= 4;
             this.p1Wheel.update();
             this.slingShot01.update();
             this.slingShot02.update();

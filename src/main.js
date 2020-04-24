@@ -15,7 +15,7 @@ let config = {
 let game = new Phaser.Game(config);
 
 game.settings = {
-    carSpeed: 7,
+    carSpeed: 10,
     gameScore: 0,    
 }
 

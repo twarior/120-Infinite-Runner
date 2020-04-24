@@ -31,7 +31,7 @@ class Car extends Phaser.GameObjects.Sprite {
         if(this.x < 47){
              this.x = 47;
         }
-        
+        //Play.create.checkOverlap();
     }
 
 }
