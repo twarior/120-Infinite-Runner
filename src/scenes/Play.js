@@ -6,6 +6,7 @@ class Play extends Phaser.Scene {
     preload() {
         //load images and tile sprite if any
         this.load.image('slingshot', './assets/SlingShot.png');
+        this.laod.image('deoraII', './assets/DeoraII.png');
         this.load.image('road', './assets/Road.png');
         this.load.image('wheel', './assets/Wheel.png');
         this.load.image('rock', './assets/Rock.png');
@@ -23,11 +24,11 @@ class Play extends Phaser.Scene {
         //cars
         this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
-        this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -690, 'slingshot', 0, 
+        this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -690, 'deoraII', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
         this.slingShot03 = new Car(this, 1*game.config.width/4, -320, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
-        this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -500, 'slingshot', 0, 
+        this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -500, 'deoraII', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
         this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'slingshot', 0, 
             game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
