@@ -217,6 +217,7 @@ class Play extends Phaser.Scene {
             .setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'You passed ' + game.settings.gameScore
              + ' obstacles!').setOrigin(.5);
+        this.animatedWheel.destroy();
     }
 
     checkOverlap(array) {
