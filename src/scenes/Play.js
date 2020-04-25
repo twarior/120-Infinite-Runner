@@ -7,7 +7,7 @@ class Play extends Phaser.Scene {
         //load images and tile sprite if any
         this.load.image('slingshot', './assets/SlingShot.png');
         this.load.image('deoraII', './assets/DeoraII.png');
-        this.load.image('road', './assets/Road.png');
+        this.load.image('road', './assets/Road2.png');
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
             startFrame: 0, endFrame: 3});
         this.load.image('rock', './assets/Rock.png');
@@ -27,7 +27,7 @@ class Play extends Phaser.Scene {
         let config = {
             key: 'wheel_animate',
             frames: this.anims.generateFrameNumbers('wheel', {start:0, end:3, first: 0}),
-            frameRate: 6,
+            frameRate: 12,
             repeat: -1
         };
         this.anims.create(config);
