@@ -126,14 +126,14 @@ class Play extends Phaser.Scene {
         });
 
         //occasional up car
-        for(let i = 15000; i < 100000; i += 15000){
-            let xBetween = Math.floor(Math.random()*(432-47) + 47);
-            this.clock = this.time.delayedCall(i, () => {
-                this.exclamationAnim(xBetween, 825);
-                console.log('\"\!\"')
-            });
+        // for(let i = 15000; i < 100000; i += 15000){
+        //     let xBetween = Math.floor(Math.random()*(432-47) + 47);
+        //     this.clock = this.time.delayedCall(i, () => {
+        //         this.exclamationAnim(xBetween, 825);
+        //         console.log('\"\!\"')
+        //     });
             
-        }
+        // }
         
     
     }
