@@ -8,10 +8,12 @@ class Play extends Phaser.Scene {
         this.load.image('slingshot', './assets/SlingShot.png');
         this.load.image('deoraII', './assets/DeoraII.png');
         this.load.image('road', './assets/Road.png');
-        this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
-            startFrame: 0, endFrame: 3});
         this.load.image('rock', './assets/Rock.png');
         this.load.image('pothole', './assets/Pothole.png');
+        this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
+            startFrame: 0, endFrame: 3});
+        this.load.spritesheet('exclamation', './assets/Exclamation.png', {frameWidth: 20, frameHeight: 40, 
+            startFrame: 0, endFrame: 9});
     }
 
     create() {
@@ -34,6 +36,14 @@ class Play extends Phaser.Scene {
         this.animatedWheel = this.add.sprite(this.p1Wheel.x, this.p1Wheel.y, 'wheel').play('wheel_animate')
             .setOrigin(0,0);
 
+
+        //animation for exclamation
+        let config02 = {
+            key: 'exclamat',
+            frames: this.anims.generateFrameNumbers('exclamation', {start: 0, end: 9, first: 0}), 
+            frameRate: 3,
+        };
+        this.anims.create(config02);
 
         //cars
         this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
@@ -85,7 +95,7 @@ class Play extends Phaser.Scene {
         //timed event
         this.thirySeconds = false;
 
-        this.clock = this.time.delayedCall(10000, () => {
+        this.clock = this.time.delayedCall(30000, () => {
             this.rock01.y = -200;
             this.rock02.y = -200;
             this.rock03.y = -200;
@@ -99,19 +109,30 @@ class Play extends Phaser.Scene {
             this.thirySeconds = true;  
         });
 
-        this.clock = this.time.delayedCall(20000, () => {
+        this.clock = this.time.delayedCall(45000, () => {
             this.addSpeedToObs(this.carsArray);
             console.log('spped up 1');
         });
 
-        this.clock = this.time.delayedCall(30000, () => {
+        this.clock = this.time.delayedCall(60000, () => {
             this.addSpeedToObs(this.carsArray);
             console.log('spped up 2');
         });
-        this.clock = this.time.delayedCall(40000, () => {
+        this.clock = this.time.delayedCall(75000, () => {
             this.addSpeedToObs(this.carsArray);
             console.log('spped up 3');
         });
+
+        //occasional up car
+        for(let i = 15000; i < 100000; i += 15000){
+            let xBetween = Math.random()*(432-47) + 47;
+            this.clock = this.time.delayedCall(i, () => {
+                this.exclamationAnim(xBetween, 825);
+                console.log('\"\!\"')
+            });
+            
+        }
+        
     
     }
     
@@ -243,4 +264,12 @@ class Play extends Phaser.Scene {
         }
     }
 
+    exclamationAnim(x , y) {
+        let excl = this.add.sprite(x, y, 'exclamation').setOrigin(0, 0);
+        excl.anims.play('exclamat');
+        excl.on('animationcopmplete', () => {
+            excl.destroy();
+        });
+        //sound effect go here if there is one
+    }
 }
