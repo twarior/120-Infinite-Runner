@@ -72,6 +72,11 @@ class Play extends Phaser.Scene {
         this.thirySeconds = false;
 
         this.clock = this.time.delayedCall(10000, () => {
+            this.rock01.y = -200;
+            this.rock02.y = -200;
+            this.rock03.y = -200;
+            this.pothole01.y = -200;
+            this.pothole02.y = -200;
             this.rock01.destroy();
             this.rock02.destroy();
             this.rock03.destroy();
@@ -109,7 +114,7 @@ class Play extends Phaser.Scene {
             this.slingShot03.update();
             this.slingShot04.update();
             this.slingShot05.update();
-            this.checkOverlap(this.carsArray);
+            //this.checkOverlap(this.carsArray);
         }
         if(!this.gameOver && this.thirySeconds == false){
             this.road.tilePositionY -= game.settings.roadSpeed;
@@ -119,7 +124,7 @@ class Play extends Phaser.Scene {
             this.rock03.update();
             this.pothole01.update();
             this.pothole02.update();
-            this.checkOverlap(this.obstacleArray);
+            //this.checkOverlap(this.obstacleArray);
             if(this.checkCollision(this.p1Wheel, this.rock01)){
                 this.EndOfLine();
             }
