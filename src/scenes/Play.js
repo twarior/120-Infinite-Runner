@@ -15,7 +15,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
             startFrame: 0, endFrame: 3});
         this.load.spritesheet('exclamation', './assets/Exclamation.png', {frameWidth: 20, frameHeight: 40, 
-            startFrame: 0, endFrame: 9});
+            startFrame: 0, endFrame: 10});
     }
 
     create() {
@@ -127,7 +127,7 @@ class Play extends Phaser.Scene {
 
         //occasional up car
         for(let i = 15000; i < 100000; i += 15000){
-            let xBetween = Math.random()*(432-47) + 47;
+            let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
                 this.exclamationAnim(xBetween, 825);
                 console.log('\"\!\"')
