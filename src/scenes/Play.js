@@ -8,7 +8,8 @@ class Play extends Phaser.Scene {
         this.load.image('slingshot', './assets/SlingShot.png');
         this.load.image('deoraII', './assets/DeoraII.png');
         this.load.image('road', './assets/Road.png');
-        this.load.image('wheel', './assets/Wheel.png');
+        this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
+            startFrame: 0, endFrame: 4});
         this.load.image('rock', './assets/Rock.png');
         this.load.image('pothole', './assets/Pothole.png');
     }
@@ -20,6 +21,19 @@ class Play extends Phaser.Scene {
         //player 1 wheel, almost certainly no player 2
         this.p1Wheel = new Wheel(this, game.config.width/2, 800, 'wheel')
             .setScale(1, 1).setOrigin(0, 0);
+
+
+        //animation for wheel    
+        let config = {
+            key: 'wheel_animate',
+            frames: this.anims.generateFrameNumbers('wheel', {start:0, end:4, first: 0}),
+            frameRate: 6,
+            repeat: -1
+        };
+        this.anims.create(config);
+        this.animatedWheel = this.add.sprite(this.p1Wheel.x, this.p1Wheel.y, 'wheel').play('wheel_animate')
+            .setOrigin(0,0);
+
 
         //cars
         this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
@@ -82,8 +96,7 @@ class Play extends Phaser.Scene {
             this.rock03.destroy();
             this.pothole01.destroy();
             this.pothole02.destroy();
-            this.thirySeconds = true;
-            
+            this.thirySeconds = true;  
         });
 
         this.clock = this.time.delayedCall(20000, () => {
@@ -109,6 +122,7 @@ class Play extends Phaser.Scene {
         if(!this.gameOver && this.thirySeconds == true){
             this.road.tilePositionY -= game.settings.roadSpeed;
             this.p1Wheel.update();
+            this.animatedWheel.x = this.p1Wheel.x;
             this.slingShot01.update();
             this.slingShot02.update();
             this.slingShot03.update();
@@ -119,6 +133,7 @@ class Play extends Phaser.Scene {
         if(!this.gameOver && this.thirySeconds == false){
             this.road.tilePositionY -= game.settings.roadSpeed;
             this.p1Wheel.update();
+            this.animatedWheel.x = this.p1Wheel.x;
             this.rock01.update();
             this.rock02.update();
             this.rock03.update();
