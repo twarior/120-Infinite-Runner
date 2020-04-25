@@ -9,7 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('deoraII', './assets/DeoraII.png');
         this.load.image('road', './assets/Road.png');
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
-            startFrame: 0, endFrame: 4});
+            startFrame: 0, endFrame: 3});
         this.load.image('rock', './assets/Rock.png');
         this.load.image('pothole', './assets/Pothole.png');
     }
@@ -26,7 +26,7 @@ class Play extends Phaser.Scene {
         //animation for wheel    
         let config = {
             key: 'wheel_animate',
-            frames: this.anims.generateFrameNumbers('wheel', {start:0, end:4, first: 0}),
+            frames: this.anims.generateFrameNumbers('wheel', {start:0, end:3, first: 0}),
             frameRate: 6,
             repeat: -1
         };
