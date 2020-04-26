@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.load.image('slingshot', './assets/SlingShot.png');
         this.load.image('deoraII', './assets/DeoraII.png');
         this.load.image('krazy8s', './assets/Krazy8.png');
+        this.load.image('roadrunner', './assets/PlymouthRoadrunner.png');
         this.load.image('road', './assets/Road2.png');
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
             startFrame: 0, endFrame: 3});
