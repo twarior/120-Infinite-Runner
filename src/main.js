@@ -17,7 +17,8 @@ let game = new Phaser.Game(config);
 game.settings = {
     roadSpeed: 5,
     carSpeed: 7,
-    gameScore: 0,    
+    gameScore: 0, 
+    notBoosted: true,  
 }
 
 let keyLEFT, keyRIGHT, keyUP, keyDOWN;

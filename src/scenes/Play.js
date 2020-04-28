@@ -51,29 +51,29 @@ class Play extends Phaser.Scene {
 
         //cars
         this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
-            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -690, 'deoraII', 0, 
-            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot03 = new Car(this, 1*game.config.width/4, -320, 'roadrunner', 0, 
-            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -500, 'krazy8s', 0, 
-            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'slingshot', 0, 
-            game.settings.carSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
 
         this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
 
         //other obstacles
         this.rock01 = new Car(this, game.config.width/2 - 30, 0, 'rock', 0, 
-            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
         this.pothole01 = new Car(this, 3*game.config.width/4 + 20, -690, 'pothole', 0, 
-            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
         this.rock02 = new Car(this, 1*game.config.width/4, -320, 'rock', 0, 
-            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
         this.pothole02 = new Car(this, 3*game.config.width/4 - 50, -500, 'pothole', 0, 
-            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
         this.rock03 = new Car(this, 1*game.config.width/4 - 90, -1000, 'rock', 0, 
-            game.settings.roadSpeed).setOrigin(0,0).setScale(1,1);
+            game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
 
         this.obstacleArray = [this.rock01, this.rock02, this.rock03, this.pothole01, this.pothole02];
 
@@ -126,16 +126,18 @@ class Play extends Phaser.Scene {
             this.addSpeedToObs(this.carsArray);
             console.log('spped up 3');
         });
-
         //occasional up car
-        // for(let i = 15000; i < 100000; i += 15000){
-        //     let xBetween = Math.floor(Math.random()*(432-47) + 47);
-        //     this.clock = this.time.delayedCall(i, () => {
-        //         this.exclamationAnim(xBetween, 825);
-        //         console.log('\"\!\"')
-        //     });
+        for(let i = 15000; i < 100000; i += 15000){
+            let xBetween = Math.floor(Math.random()*(432-47) + 47);
+            this.clock = this.time.delayedCall(i, () => {
+                this.exclamationAnim(xBetween, 825);
+                console.log('\"\!\"')
+                this.boostedCar = new Car(this, xBetween, 4500, 'krazy8s', 0, 
+                -game.settings.carSpeed*2, false).setOrigin(0, 0).setScale(1, 1);
+
+            });
             
-        // }
+        }
         
     
     }
@@ -181,7 +183,11 @@ class Play extends Phaser.Scene {
                 this.EndOfLine();
             }
         }
-        
+
+        if(this.boostedCar && !this.gameOver){
+            //console.log(this.boostedCar.y);
+            this.boostedCar.update();
+        }
 
         if(this.checkCollision(this.p1Wheel, this.slingShot01)){
             this.EndOfLine();
