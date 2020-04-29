@@ -15,14 +15,14 @@ class Play extends Phaser.Scene {
         this.load.image('banana', './assets/Banana.png');
         this.load.image('cone', './assets/Cone.png');
         this.load.image('turtle', './assets/Turtle.png');
-        this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
-            startFrame: 0, endFrame: 3});
         this.load.image('rock', './assets/Rock.png');
         this.load.image('pothole', './assets/Pothole.png');
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
             startFrame: 0, endFrame: 3});
         this.load.spritesheet('exclamation', './assets/Exclamation.png', {frameWidth: 20, frameHeight: 40, 
             startFrame: 0, endFrame: 10});
+        this.load.spritesheet('boosted', './assets/Krazy8S_Animation.png', {frameWidth: 64, frameHeight: 140, 
+            startFrame: 0, endFrame: 5});
     }
 
     create() {
@@ -33,6 +33,9 @@ class Play extends Phaser.Scene {
         this.p1Wheel = new Wheel(this, game.config.width/2, 800, 'wheel')
             .setScale(1, 1).setOrigin(0, 0);
 
+        //boosted car needs to start in game earlier?
+        this.boostedCar = new Car(this, 250, 1250, 'krazy8s', 0, 
+                0, false).setOrigin(0, 0).setScale(1, 1);
 
         //animation for wheel    
         let config = {
@@ -53,6 +56,31 @@ class Play extends Phaser.Scene {
             frameRate: 3,
         };
         this.anims.create(config02);
+
+
+        //occasional boosted car
+        for(let i = 0; i < 100000; i += 15000){
+            let xBetween = Math.floor(Math.random()*(432-47) + 47);
+            this.clock = this.time.delayedCall(i, () => {
+                this.exclamationAnim(xBetween, 825);
+                //console.log('\"\!\"')
+                this.boostAnim
+                this.boostedCar.x = xBetween;
+                this.boostedCar.y = 4500;
+                this.boostedCar.speed = -game.settings.carSpeed;
+            });  
+        }
+
+        //animation for boosted car
+        let config03 = {
+            key: 'boostAnimate', 
+            frames: this.anims.generateFrameNumbers('boosted', {start: 0, end: 5, first: 0}),
+            framerate: 6,
+            repeat: -1
+        };
+        this.anims.create(config03);
+        this.boostAnim = this.add.sprite(this.boostedCar.x, this.boostedCar.y, 'boosted')
+            .play('boostAnimate').setOrigin(0,0);
 
         //cars
         this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
@@ -131,18 +159,7 @@ class Play extends Phaser.Scene {
             this.addSpeedToObs(this.carsArray);
             //console.log('spped up 3');
         });
-        //occasional up car
-        for(let i = 0; i < 100000; i += 15000){
-            let xBetween = Math.floor(Math.random()*(432-47) + 47);
-            this.clock = this.time.delayedCall(i, () => {
-                this.exclamationAnim(xBetween, 825);
-                //console.log('\"\!\"')
-                this.boostedCar = new Car(this, xBetween, 5500, 'krazy8s', 0, 
-                -game.settings.carSpeed*2, false).setOrigin(0, 0).setScale(1, 1);
-
-            });
-            
-        }
+        
     }
     
 
@@ -190,6 +207,8 @@ class Play extends Phaser.Scene {
         if(this.boostedCar && !this.gameOver){
             //console.log(this.boostedCar.y);
             this.boostedCar.update();
+            this.boostAnim.y = this.boostedCar.y;
+            this.boostAnim.x = this.boostedCar.x
             if(this.checkCollision(this.p1Wheel, this.boostedCar)){
                 this.EndOfLine();
             }
@@ -255,6 +274,7 @@ class Play extends Phaser.Scene {
         this.add.text(game.config.width/2, game.config.height/2, 'You passed ' + game.settings.gameScore
              + ' obstacles!').setOrigin(.5);
         this.animatedWheel.destroy();
+        this.boostAnim.destroy();
     }
 
     checkOverlap(array) {
