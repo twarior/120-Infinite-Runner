@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('krazy8s', './assets/Krazy8S.png');
         this.load.image('roadrunner', './assets/PlymouthRoadrunner.png');
         this.load.image('ballistik', './assets/Ballistik.png');
+        this.load.image('lightning', './assets/GreasedLightning.png');
         this.load.image('road', './assets/Road2.png');
         this.load.image('banana', './assets/Banana.png');
         this.load.image('cone', './assets/Cone.png');
@@ -62,7 +63,7 @@ class Play extends Phaser.Scene {
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -500, 'ballistik', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'krazy8s', 0, 
+        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'lightning', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
 
         this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
