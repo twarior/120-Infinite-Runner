@@ -63,7 +63,7 @@ class Play extends Phaser.Scene {
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -600, 'ballistik', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1100, 'lightning', 0, 
+        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'lightning', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
 
         this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
@@ -132,7 +132,7 @@ class Play extends Phaser.Scene {
             //console.log('spped up 3');
         });
         //occasional up car
-        for(let i = 30000; i < 100000; i += 15000){
+        for(let i = 0; i < 100000; i += 15000){
             let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
                 this.exclamationAnim(xBetween, 825);
