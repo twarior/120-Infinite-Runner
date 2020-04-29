@@ -120,31 +120,29 @@ class Play extends Phaser.Scene {
 
         this.clock = this.time.delayedCall(45000, () => {
             this.addSpeedToObs(this.carsArray);
-            console.log('spped up 1');
+            //console.log('spped up 1');
         });
 
         this.clock = this.time.delayedCall(60000, () => {
             this.addSpeedToObs(this.carsArray);
-            console.log('spped up 2');
+            //console.log('spped up 2');
         });
         this.clock = this.time.delayedCall(75000, () => {
             this.addSpeedToObs(this.carsArray);
-            console.log('spped up 3');
+            //console.log('spped up 3');
         });
         //occasional up car
-        for(let i = 15000; i < 100000; i += 15000){
+        for(let i = 30000; i < 100000; i += 15000){
             let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
                 this.exclamationAnim(xBetween, 825);
-                console.log('\"\!\"')
-                this.boostedCar = new Car(this, xBetween, 4500, 'krazy8s', 0, 
+                //console.log('\"\!\"')
+                this.boostedCar = new Car(this, xBetween, 5500, 'krazy8s', 0, 
                 -game.settings.carSpeed*2, false).setOrigin(0, 0).setScale(1, 1);
 
             });
             
         }
-        
-    
     }
     
 
@@ -275,16 +273,18 @@ class Play extends Phaser.Scene {
     addSpeedToObs(array){
         for(let i = 0; i < array.length; i++){
             let obs = array[i];
-            obs.speed += 3;
+            obs.speed += 2;
         }
     }
 
     exclamationAnim(x , y) {
-        let excl = this.add.sprite(x, y, 'exclamation').setOrigin(0, 0);
-        excl.anims.play('exclamat');
-        excl.on('animationcopmplete', () => {
-            excl.destroy();
-        });
-        //sound effect go here if there is one
+        if(!this.gameOver){
+            let excl = this.add.sprite(x, y, 'exclamation').setOrigin(0, 0);
+            excl.anims.play('exclamat');
+            excl.on('animationcopmplete', () => {
+                excl.destroy();
+            });
+            //sound effect go here if there is one
+        }
     }
 }
