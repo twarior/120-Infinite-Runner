@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload(){
         //load audio here
-
+        this.load.image('menuScreen', './assets/Fire_Tires_Menu.png');
     }
 
     create() {
@@ -13,8 +13,7 @@ class Menu extends Phaser.Scene {
         let menuConfig = {
             fontFamily: 'Sunflower',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            color: '#004FFF',
             align: 'center',
             padding: {
                 top: 5,
@@ -25,14 +24,12 @@ class Menu extends Phaser.Scene {
 
         //show menu text
         let centerX = game.config.width/2;
-        let centerY = game.config.height/2;
+        let centerY = game.config.height/2 + 32;
         let textSpacer = 64;
-
-        this.add.text(centerX, centerY - textSpacer, 'FIRE TIRES', menuConfig).setOrigin(.5);
-        this.add.text(centerX, centerY, 'Use ↔ arrows to move\n Survive for as long as you can', menuConfig).setOrigin(.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.config = '#000';
-        this.add.text(centerX, centerY + textSpacer, 'Press UP to Start', menuConfig).setOrigin(.5);
+        var menuScreen = this.add.image(0, 0, 'menuScreen').setOrigin(0, 0);
+        //this.add.text(centerX, centerY - textSpacer, 'FIRE TIRES', menuConfig).setOrigin(.5);
+        this.add.text(centerX, centerY + textSpacer, 'Use ↔ arrows to move\n Survive for as long as you can', menuConfig).setOrigin(.5);
+        this.add.text(centerX, centerY + textSpacer*2, 'Press UP to Start or DOWN for Credits', menuConfig).setOrigin(.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
