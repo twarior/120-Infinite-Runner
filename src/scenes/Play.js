@@ -11,6 +11,9 @@ class Play extends Phaser.Scene {
         this.load.image('roadrunner', './assets/PlymouthRoadrunner.png');
         this.load.image('ballistik', './assets/Ballistik.png');
         this.load.image('road', './assets/Road2.png');
+        this.load.image('banana', './assets/Banana.png');
+        this.load.image('cone', './assets/Cone.png');
+        this.load.image('turtle', './assets/Turtle.png');
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
             startFrame: 0, endFrame: 3});
         this.load.image('rock', './assets/Rock.png');
@@ -69,11 +72,11 @@ class Play extends Phaser.Scene {
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
         this.pothole01 = new Car(this, 3*game.config.width/4 + 20, -690, 'pothole', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.rock02 = new Car(this, 1*game.config.width/4, -320, 'rock', 0, 
+        this.rock02 = new Car(this, 1*game.config.width/4, -320, 'banana', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.pothole02 = new Car(this, 3*game.config.width/4 - 50, -500, 'pothole', 0, 
+        this.pothole02 = new Car(this, 3*game.config.width/4 - 50, -500, 'cone', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.rock03 = new Car(this, 1*game.config.width/4 - 90, -1000, 'rock', 0, 
+        this.rock03 = new Car(this, 1*game.config.width/4 - 90, -1000, 'turtle', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
 
         this.obstacleArray = [this.rock01, this.rock02, this.rock03, this.pothole01, this.pothole02];
