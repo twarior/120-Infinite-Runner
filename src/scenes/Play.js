@@ -66,7 +66,7 @@ class Play extends Phaser.Scene {
                 //console.log('\"\!\"')
                 this.boostAnim
                 this.boostedCar.x = xBetween;
-                this.boostedCar.y = 4500;
+                this.boostedCar.y = 4000;
                 this.boostedCar.speed = -game.settings.carSpeed;
             });  
         }
