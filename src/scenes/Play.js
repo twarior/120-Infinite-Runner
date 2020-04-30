@@ -87,11 +87,11 @@ class Play extends Phaser.Scene {
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -790, 'deoraII', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot03 = new Car(this, 1*game.config.width/4, -420, 'roadrunner', 0, 
+        this.slingShot03 = new Car(this, 1*game.config.width/4, -420, 'lightning', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
         this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -600, 'ballistik', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'lightning', 0, 
+        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'roadrunner', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
 
         this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
