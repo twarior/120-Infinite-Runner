@@ -59,7 +59,7 @@ class Play extends Phaser.Scene {
 
 
         //occasional boosted car
-        for(let i = 0; i < 100000; i += 15000){
+        for(let i = 45000; i < 100000; i += 15000){
             let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
                 this.exclamationAnim(xBetween, 825);
@@ -83,32 +83,32 @@ class Play extends Phaser.Scene {
             .play('boostAnimate').setOrigin(0,0);
 
         //cars
-        this.slingShot01 = new Car(this, game.config.width/2 - 30, -128, 'slingshot', 0, 
+        this.slingShot = new Car(this, game.config.width/2 - 30, -3628, 'slingshot', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot02 = new Car(this, 3*game.config.width/4 + 20, -790, 'deoraII', 0, 
+        this.deoraII = new Car(this, 3*game.config.width/4 + 20, -4290, 'deoraII', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot03 = new Car(this, 1*game.config.width/4, -420, 'lightning', 0, 
+        this.lightning = new Car(this, 1*game.config.width/4, -3920, 'lightning', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot04 = new Car(this, 3*game.config.width/4 - 50, -600, 'ballistik', 0, 
+        this.ballistik = new Car(this, 3*game.config.width/4 - 50, -4100, 'ballistik', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.slingShot05 = new Car(this, 1*game.config.width/4 - 90, -1000, 'roadrunner', 0, 
+        this.roadrunner = new Car(this, 1*game.config.width/4 - 90, -4600, 'roadrunner', 0, 
             game.settings.carSpeed, true).setOrigin(0,0).setScale(1,1);
 
-        this.carsArray = [this.slingShot01, this.slingShot02, this.slingShot03, this.slingShot04, this.slingShot05];
+        this.carsArray = [this.slingShot, this.deoraII, this.lightning, this.ballistik, this.roadrunner];
 
         //other obstacles
-        this.rock01 = new Car(this, game.config.width/2 - 30, 0, 'rock', 0, 
+        this.rock = new Car(this, game.config.width/2 - 30, 0, 'rock', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.pothole01 = new Car(this, 3*game.config.width/4 + 20, -690, 'pothole', 0, 
+        this.pothole = new Car(this, 3*game.config.width/4 + 20, -690, 'pothole', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.rock02 = new Car(this, 1*game.config.width/4, -320, 'banana', 0, 
+        this.banana = new Car(this, 1*game.config.width/4, -320, 'banana', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.pothole02 = new Car(this, 3*game.config.width/4 - 50, -500, 'cone', 0, 
+        this.cone = new Car(this, 3*game.config.width/4 - 50, -500, 'cone', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
-        this.rock03 = new Car(this, 1*game.config.width/4 - 90, -1000, 'turtle', 0, 
+        this.turtle = new Car(this, 1*game.config.width/4 - 90, -1000, 'turtle', 0, 
             game.settings.roadSpeed, true).setOrigin(0,0).setScale(1,1);
 
-        this.obstacleArray = [this.rock01, this.rock02, this.rock03, this.pothole01, this.pothole02];
+        this.obstacleArray = [this.rock, this.pothole, this.banana, this.cone, this.turtle];
 
         //key inputs for moving, and restarting or going to menu
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -133,16 +133,7 @@ class Play extends Phaser.Scene {
         this.thirySeconds = false;
 
         this.clock = this.time.delayedCall(30000, () => {
-            this.rock01.y = -200;
-            this.rock02.y = -200;
-            this.rock03.y = -200;
-            this.pothole01.y = -200;
-            this.pothole02.y = -200;
-            this.rock01.destroy();
-            this.rock02.destroy();
-            this.rock03.destroy();
-            this.pothole01.destroy();
-            this.pothole02.destroy();
+            console.log('thirty');
             this.thirySeconds = true;  
         });
 
@@ -170,38 +161,35 @@ class Play extends Phaser.Scene {
             this.road.tilePositionY -= game.settings.roadSpeed;
             this.p1Wheel.update();
             this.animatedWheel.x = this.p1Wheel.x;
-            this.slingShot01.update();
-            this.slingShot02.update();
-            this.slingShot03.update();
-            this.slingShot04.update();
-            this.slingShot05.update();
+            this.slingShot.update();
+            this.deoraII.update();
+            this.lightning.update();
+            this.roadrunner.update();
+            this.ballistik.update();
+            if(this.obstacleArray){
+                this.obstaclesBeGone(this.obstacleArray);
+                if(this.checkCollision(this.p1Wheel, this.obstacleArray)){
+                    this.EndOfLine();
+                }
+            }
+            if(this.checkCollision(this.p1Wheel, this.carsArray)){
+                this.EndOfLine();
+            }
             //this.checkOverlap(this.carsArray);
         }
         if(!this.gameOver && this.thirySeconds == false){
             this.road.tilePositionY -= game.settings.roadSpeed;
             this.p1Wheel.update();
             this.animatedWheel.x = this.p1Wheel.x;
-            this.rock01.update();
-            this.rock02.update();
-            this.rock03.update();
-            this.pothole01.update();
-            this.pothole02.update();
+            this.rock.update();
+            this.pothole.update();
+            this.banana.update();
+            this.cone.update();
+            this.turtle.update();
+            if(this.checkCollision(this.p1Wheel, this.obstacleArray)){
+                this.EndOfLine();
+            }
             //this.checkOverlap(this.obstacleArray);
-            if(this.checkCollision(this.p1Wheel, this.rock01)){
-                this.EndOfLine();
-            }
-            if(this.checkCollision(this.p1Wheel, this.rock02)){
-                this.EndOfLine();
-            }
-            if(this.checkCollision(this.p1Wheel, this.rock03)){
-                this.EndOfLine();
-            }
-            if(this.checkCollision(this.p1Wheel, this.pothole01)){
-                this.EndOfLine();
-            }
-            if(this.checkCollision(this.p1Wheel, this.pothole02)){
-                this.EndOfLine();
-            }
         }
 
         if(this.boostedCar && !this.gameOver){
@@ -213,37 +201,6 @@ class Play extends Phaser.Scene {
                 this.EndOfLine();
             }
         }
-
-        if(this.checkCollision(this.p1Wheel, this.slingShot01)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.slingShot02)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.slingShot03)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.slingShot04)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.slingShot05)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.rock01)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.rock02)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.rock03)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.pothole01)){
-            this.EndOfLine();
-        }
-        if(this.checkCollision(this.p1Wheel, this.pothole02)){
-            this.EndOfLine();
-        }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.scene.start("menuScene");
         } 
@@ -253,16 +210,22 @@ class Play extends Phaser.Scene {
         }
     }
 
-    checkCollision(wheel, car) {
+    checkCollision(wheel, array) {
         // simple AABB checking
-        if (wheel.y < car.y + car.height && 
-            wheel.y + wheel.height > car.y && 
-            wheel.x < car.x + car.width &&
-            wheel.width + wheel.x > car. x) {
+        let collision = false;
+        for(let i = 0; i < array.length; i++){
+            if (wheel.y < array[i].y + array[i].height && 
+                wheel.y + wheel.height > array[i].y && 
+                wheel.x < array[i].x + array[i].width &&
+                wheel.width + wheel.x > array[i]. x) {
+                    collision = true;
+            } 
+            if(collision == true){
+                console.log(array[i].texture.key);
                 return true;
-        } else {
-            return false;
+            }
         }
+        return false;
     }
 
     EndOfLine(){
@@ -308,6 +271,25 @@ class Play extends Phaser.Scene {
                 excl.destroy();
             });
             //sound effect go here if there is one
+        }
+    }
+
+    obstaclesBeGone(array){
+        let count = 0;
+        for(let i = 0; i < array.length; i++){
+            if(array[i]){
+                array[i].update()
+                if(array[i].y >= game.config.height){
+                    array[i].speed = 0;
+                    array[i].destroy();
+                }
+            }
+            else {
+                count++;
+            }
+        }
+        if(count = 5){
+            array = null;
         }
     }
 }
