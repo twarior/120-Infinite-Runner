@@ -6,6 +6,8 @@ class Menu extends Phaser.Scene {
     preload(){
         //load audio here
         this.load.image('menuScreen', './assets/Fire_Tires_Menu.png');
+        this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
+        this.load.audio('sfx_play', './assets/Sounds/Doppler1.wav');
     }
 
     create() {
@@ -42,7 +44,13 @@ class Menu extends Phaser.Scene {
     update() {
         //if the player presses the up arrow the game will start
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {
-          this.scene.start("playScene");    
+            
+            this.scene.start("playScene");
+            this.sound.play('sfx_play');  
+        }
+        else if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
+            this.sound.play('sfx_button');
+            this.scene.start("creditsScene");    
         }
     }
 }
