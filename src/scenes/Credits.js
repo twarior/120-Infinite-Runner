@@ -6,10 +6,16 @@ class Credits extends Phaser.Scene {
     preload(){
         //load audio here
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
+        this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
 
     }
     
     create() {
+        //music
+        this.music = this.sound.add('music_roadbeasts');
+        this.music.setLoop(true);
+        this.music.play();
+
         //credits display
         let menuConfig = {
             fontFamily: 'Sunflower',
@@ -41,6 +47,7 @@ class Credits extends Phaser.Scene {
         //if the player presses the up arrow the game will start
         if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.sound.play('sfx_button');
+            //this.music.stop();
             this.scene.start("menuScene");    
         }
     }
