@@ -21,10 +21,13 @@ class Play extends Phaser.Scene {
             startFrame: 0, endFrame: 3});
         this.load.spritesheet('exclamation', './assets/Exclamation.png', {frameWidth: 20, frameHeight: 40, 
             startFrame: 0, endFrame: 10});
-        this.load.spritesheet('boosted', './assets/Krazy8S_Animation.png', {frameWidth: 64, frameHeight: 140, 
-            startFrame: 0, endFrame: 5});
+        this.load.spritesheet('boosted', './assets/Krazy8S_Animation.png', {frameWidth: 64, 
+            frameHeight: 140, startFrame: 0, endFrame: 5});
+        this.load.spritesheet('death', './assets/Wheel_Explosion_Redraw.png', {frameWidth: 96, 
+            frameHeight: 96, startframe: 0, endframe: 9}); 
         this.load.audio('sfx_boosted', './assets/Sounds/Doppler3.wav');
         this.load.audio('sfx_warning', './assets/Sounds/WarningSound.wav');
+        this.load.audio('sfx_lose', './assets/sounds/LosesoundbySnabisch.wav');
 
     }
 
@@ -62,7 +65,7 @@ class Play extends Phaser.Scene {
 
 
         //occasional boosted car
-        for(let i = 45000; i < 100000; i += 15000){
+        for(let i = 0; i < 100000; i += 15000){
             let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
                 this.exclamationAnim(xBetween, 825);
@@ -94,6 +97,18 @@ class Play extends Phaser.Scene {
         this.anims.create(config03);
         this.boostAnim = this.add.sprite(this.boostedCar.x, this.boostedCar.y, 'boosted')
             .play('boostAnimate').setOrigin(0,0);
+
+        this.boostedArray = [this.boostedCar];
+
+        //animation for wheel explosion
+        let config04 = {
+            key: 'deathAnimation',
+            frames: this.anims.generateFrameNumbers('death', {start: 0, end: 9, first: 0}),
+            framerate: 2
+        };
+        this.anims.create(config04);
+
+
 
         //cars
         this.slingShot = new Car(this, game.config.width/2 - 30, -3628, 'slingshot', 0, 
@@ -210,7 +225,7 @@ class Play extends Phaser.Scene {
             this.boostedCar.update();
             this.boostAnim.y = this.boostedCar.y;
             this.boostAnim.x = this.boostedCar.x
-            if(this.checkCollision(this.p1Wheel, this.boostedCar)){
+            if(this.checkCollision(this.p1Wheel, this.boostedArray)){
                 this.EndOfLine();
             }
         }
@@ -242,6 +257,8 @@ class Play extends Phaser.Scene {
     }
 
     EndOfLine(){
+        //game over function:
+        //sets the game to over, adds text, explodes wheel, stops other objects from moving
         this.gameOver = true;
         //let score = timer.getElapsedSeconds();
         this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER').setOrigin(0.5);
@@ -251,9 +268,12 @@ class Play extends Phaser.Scene {
              + ' obstacles!').setOrigin(.5);
         this.animatedWheel.destroy();
         this.boostAnim.destroy();
+        this.wheelExplode(this.p1Wheel);
     }
 
     checkOverlap(array) {
+        //unused function that used to check the overlap of a group of obstacles becuase previously both
+        //the x and y postions had some randomness, which caused overlapping
         for(let i = 0; i < array.length; i ++){
             for(let j = 0; j < array.length; j ++){
                 if(i != j){
@@ -270,6 +290,7 @@ class Play extends Phaser.Scene {
     }
 
     addSpeedToObs(array){
+        //small function that makes the cars go faster (or any array of objects with a speed field)
         for(let i = 0; i < array.length; i++){
             let obs = array[i];
             obs.speed += 2;
@@ -288,6 +309,9 @@ class Play extends Phaser.Scene {
     }
 
     obstaclesBeGone(array){
+        //lets the smaller obstacles go off screen before being destroyed
+        //sets the speed to 0 because otherwise there was a bug where the player could die to invisable 
+        //obstacles.
         let count = 0;
         for(let i = 0; i < array.length; i++){
             if(array[i]){
@@ -304,5 +328,15 @@ class Play extends Phaser.Scene {
         if(count = 5){
             array = null;
         }
+    }
+
+    wheelExplode(wheel){
+        wheel.alpha = 0; //hide the wheel
+        let death = this.add.sprite(wheel.x - 40, wheel.y - 25, 'death').setOrigin(0, 0);
+        death.anims.play('deathAnimation');
+        death.on('animationcomplete', () => {
+            death.destroy();
+        });
+        this.sound.play('sfx_lose');
     }
 }
