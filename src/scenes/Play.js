@@ -28,6 +28,7 @@ class Play extends Phaser.Scene {
         this.load.audio('sfx_boosted', './assets/Sounds/Doppler3.wav');
         this.load.audio('sfx_warning', './assets/Sounds/WarningSound.wav');
         this.load.audio('sfx_lose', './assets/sounds/LosesoundbySnabisch.wav');
+        this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
 
     }
 
@@ -43,6 +44,11 @@ class Play extends Phaser.Scene {
         this.boostedCar = new Car(this, 250, 1250, 'krazy8s', 0, 
                 0, false).setOrigin(0, 0).setScale(1, 1);
 
+        //looping music
+        this.music = this.sound.add('music_roadbeasts');
+        this.music.setLoop(true);
+        this.music.play();
+        
         //animation for wheel    
         let config = {
             key: 'wheel_animate',
@@ -269,6 +275,7 @@ class Play extends Phaser.Scene {
         this.animatedWheel.destroy();
         this.boostAnim.destroy();
         this.wheelExplode(this.p1Wheel);
+        this.music.stop();
     }
 
     checkOverlap(array) {
