@@ -62,7 +62,7 @@ class Play extends Phaser.Scene {
 
 
         //occasional boosted car
-        for(let i = 45000; i < 100000; i += 15000){
+        for(let i = 0; i < 100000; i += 15000){
             let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
                 this.exclamationAnim(xBetween, 825);
@@ -73,10 +73,14 @@ class Play extends Phaser.Scene {
                 this.boostedCar.speed = -game.settings.carSpeed;
             }); 
             this.clock = this.time.delayedCall(i+2750, () => {
-                this.sound.play('sfx_warning');
+                if(!this.gameOver){
+                    this.sound.play('sfx_warning');
+                }
             })
             this.clock = this.time.delayedCall(i+3250, () => {
-                this.sound.play('sfx_boosted');
+                if(!this.gameOver){
+                    this.sound.play('sfx_boosted');
+                }
             }) 
         }
 
