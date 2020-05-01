@@ -23,6 +23,9 @@ class Play extends Phaser.Scene {
             startFrame: 0, endFrame: 10});
         this.load.spritesheet('boosted', './assets/Krazy8S_Animation.png', {frameWidth: 64, frameHeight: 140, 
             startFrame: 0, endFrame: 5});
+        this.load.audio('sfx_boosted', './assets/Sounds/Doppler3.wav');
+        this.load.audio('sfx_warning', './assets/Sounds/WarningSound.wav');
+
     }
 
     create() {
@@ -68,7 +71,13 @@ class Play extends Phaser.Scene {
                 this.boostedCar.x = xBetween;
                 this.boostedCar.y = 4000;
                 this.boostedCar.speed = -game.settings.carSpeed;
-            });  
+            }); 
+            this.clock = this.time.delayedCall(i+2750, () => {
+                this.sound.play('sfx_warning');
+            })
+            this.clock = this.time.delayedCall(i+3250, () => {
+                this.sound.play('sfx_boosted');
+            }) 
         }
 
         //animation for boosted car
