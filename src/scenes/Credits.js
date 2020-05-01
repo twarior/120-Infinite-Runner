@@ -8,14 +8,12 @@ class Credits extends Phaser.Scene {
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
 
     }
-
+    
     create() {
-        
         //credits display
         let menuConfig = {
             fontFamily: 'Sunflower',
             fontSize: '28px',
-            backgroundColor: '#FFFFFF',
             color: '#004FFF',
             align: 'center',
             padding: {
@@ -24,7 +22,7 @@ class Credits extends Phaser.Scene {
             },
             fixedWidth: 0
         }
-
+        this.cameras.main.setBackgroundColor(0xDA8F5C)
         //show menu text
         let centerX = game.config.width/2;
         let centerY = game.config.height/4;

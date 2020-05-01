@@ -28,6 +28,7 @@ class Play extends Phaser.Scene {
         this.load.audio('sfx_boosted', './assets/Sounds/Doppler3.wav');
         this.load.audio('sfx_warning', './assets/Sounds/WarningSound.wav');
         this.load.audio('sfx_lose', './assets/sounds/LosesoundbySnabisch.wav');
+        this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
         this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
 
     }
@@ -236,6 +237,7 @@ class Play extends Phaser.Scene {
             }
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
+            this.sound.play('sfx_button');
             this.scene.start("menuScene");
         } 
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyUP)) {
