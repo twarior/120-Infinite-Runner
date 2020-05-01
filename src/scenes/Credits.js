@@ -47,7 +47,7 @@ class Credits extends Phaser.Scene {
         //if the player presses the up arrow the game will start
         if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.sound.play('sfx_button');
-            //this.music.stop();
+            this.music.stop();
             this.scene.start("menuScene");    
         }
     }
