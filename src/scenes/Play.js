@@ -92,7 +92,7 @@ class Play extends Phaser.Scene {
                 }
             })
             this.clock = this.time.delayedCall(i+3250, () => {
-                //boosted car actaully appears lol
+                //boosted car actaully appears lol\
                 if(!this.gameOver){
                     this.sound.play('sfx_boosted');
                 }
