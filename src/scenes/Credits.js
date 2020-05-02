@@ -6,7 +6,7 @@ class Credits extends Phaser.Scene {
     preload(){
         //load audio here
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
-        this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
+        this.load.audio('music_roadbeasts', './assets/Sounds/RoadBeasts_Chiptune.wav');
         this.load.image('slingshot', './assets/SlingShot.png');
         this.load.image('deoraII', './assets/DeoraII.png');
         this.load.image('krazy8s', './assets/Krazy8S.png');

@@ -30,9 +30,9 @@ class Play extends Phaser.Scene {
         this.load.audio('sfx_crash', './assets/Sounds/CarCrash.wav');
         this.load.audio('sfx_boosted', './assets/Sounds/Doppler3.wav');
         this.load.audio('sfx_warning', './assets/Sounds/WarningSound.wav');
-        this.load.audio('sfx_lose', './assets/sounds/LosesoundbySnabisch.wav');
+        this.load.audio('sfx_lose', './assets/Sounds/LosesoundbySnabisch.wav');
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
-        this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
+        this.load.audio('music_roadbeasts', './assets/Sounds/RoadBeasts_Chiptune.wav');
 
     }
 
