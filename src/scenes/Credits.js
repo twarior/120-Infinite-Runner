@@ -7,7 +7,12 @@ class Credits extends Phaser.Scene {
         //load audio here
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
         this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
-
+        this.load.image('slingshot', './assets/SlingShot.png');
+        this.load.image('deoraII', './assets/DeoraII.png');
+        this.load.image('krazy8s', './assets/Krazy8S.png');
+        this.load.image('roadrunner', './assets/PlymouthRoadrunner.png');
+        this.load.image('ballistik', './assets/Ballistik.png');
+        this.load.image('lightning', './assets/GreasedLightning.png');
     }
     
     create() {
@@ -15,6 +20,14 @@ class Credits extends Phaser.Scene {
         this.music = this.sound.add('music_roadbeasts');
         this.music.setLoop(true);
         this.music.play();
+
+        //car images
+        var sling = this.add.image(35, 35, 'slingshot').setOrigin(0, 0);
+        var deora = this.add.image(450, 35, 'deoraII').setOrigin(0, 0);
+        var krazy = this.add.image(240, 35, 'krazy8s').setOrigin(0, 0);
+        var road = this.add.image(35, 750, 'roadrunner').setOrigin(0, 0);
+        var ball = this.add.image(240, 750, 'ballistik').setOrigin(0, 0);
+        var light = this.add.image(450, 750, 'lightning').setOrigin(0, 0);
 
         //credits display
         let menuConfig = {
