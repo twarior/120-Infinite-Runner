@@ -6,8 +6,13 @@ class Credits extends Phaser.Scene {
     preload(){
         //load audio here
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
-        this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
-
+        this.load.audio('music_roadbeasts', './assets/Sounds/RoadBeasts_Chiptune.wav');
+        this.load.image('slingshot', './assets/SlingShot.png');
+        this.load.image('deoraII', './assets/DeoraII.png');
+        this.load.image('krazy8s', './assets/Krazy8S.png');
+        this.load.image('roadrunner', './assets/PlymouthRoadrunner.png');
+        this.load.image('ballistik', './assets/Ballistik.png');
+        this.load.image('lightning', './assets/GreasedLightning.png');
     }
     
     create() {
@@ -15,6 +20,14 @@ class Credits extends Phaser.Scene {
         this.music = this.sound.add('music_roadbeasts');
         this.music.setLoop(true);
         this.music.play();
+
+        //car images
+        var sling = this.add.image(35, 35, 'slingshot').setOrigin(0, 0);
+        var deora = this.add.image(450, 35, 'deoraII').setOrigin(0, 0);
+        var krazy = this.add.image(240, 35, 'krazy8s').setOrigin(0, 0);
+        var road = this.add.image(35, 750, 'roadrunner').setOrigin(0, 0);
+        var ball = this.add.image(240, 750, 'ballistik').setOrigin(0, 0);
+        var light = this.add.image(450, 750, 'lightning').setOrigin(0, 0);
 
         //credits display
         let menuConfig = {
@@ -37,7 +50,7 @@ class Credits extends Phaser.Scene {
         this.add.text(centerX, centerY, 'Art: Katarina Kelso', menuConfig).setOrigin(.5);
         this.add.text(centerX, centerY + textSpacer*2, 'Programming: Tennessee Phillips Ward', menuConfig).setOrigin(.5);
         this.add.text(centerX, centerY + textSpacer*4, 'Sound: Kalvin Vinski', menuConfig).setOrigin(.5);
-        this.add.text(centerX, centerY + textSpacer*6, 'Press DOWN to go back to the Menu', menuConfig).setOrigin(.5);
+        this.add.text(centerX, centerY + textSpacer*6, 'Press ⇣ to go back to the Menu', menuConfig).setOrigin(.5);
         // define keys
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
  

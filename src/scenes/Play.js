@@ -24,12 +24,15 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('boosted', './assets/Krazy8S_Animation.png', {frameWidth: 64, 
             frameHeight: 140, startFrame: 0, endFrame: 5});
         this.load.spritesheet('death', './assets/Wheel_Explosion_Redraw.png', {frameWidth: 96, 
-            frameHeight: 96, startframe: 0, endframe: 9}); 
+            frameHeight: 96, startframe: 0, endFrame: 9}); 
+        this.load.spritesheet('explode', './assets/Smokey_Explosion.png', {frameWidth: 128, frameHeight:150, 
+            startFrame: 0, endFrame: 4});
+        this.load.audio('sfx_crash', './assets/Sounds/CarCrash.wav');
         this.load.audio('sfx_boosted', './assets/Sounds/Doppler3.wav');
         this.load.audio('sfx_warning', './assets/Sounds/WarningSound.wav');
-        this.load.audio('sfx_lose', './assets/sounds/LosesoundbySnabisch.wav');
+        this.load.audio('sfx_lose', './assets/Sounds/LosesoundbySnabisch.wav');
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
-        this.load.audio('music_roadbeasts', './assets/sounds/RoadBeasts_Chiptune.wav');
+        this.load.audio('music_roadbeasts', './assets/Sounds/RoadBeasts_Chiptune.wav');
 
     }
 
@@ -72,22 +75,24 @@ class Play extends Phaser.Scene {
 
 
         //occasional boosted car
-        for(let i = 0; i < 100000; i += 15000){
+        for(let i = 45000; i < 1000000; i += 15000){
             let xBetween = Math.floor(Math.random()*(432-47) + 47);
             this.clock = this.time.delayedCall(i, () => {
+                //play an explamation animation, notifying the player that something is about to happen
                 this.exclamationAnim(xBetween, 825);
-                //console.log('\"\!\"')
                 this.boostAnim
                 this.boostedCar.x = xBetween;
                 this.boostedCar.y = 4000;
                 this.boostedCar.speed = -game.settings.carSpeed;
             }); 
             this.clock = this.time.delayedCall(i+2750, () => {
+                //warning sound right before car appears
                 if(!this.gameOver){
                     this.sound.play('sfx_warning');
                 }
             })
             this.clock = this.time.delayedCall(i+3250, () => {
+                //boosted car actaully appears lol\
                 if(!this.gameOver){
                     this.sound.play('sfx_boosted');
                 }
@@ -115,7 +120,13 @@ class Play extends Phaser.Scene {
         };
         this.anims.create(config04);
 
-
+        //animation for car explosion
+        let config05 = {
+            key: 'explodeAnimation',
+            frames: this.anims.generateFrameNumbers('explode', {start: 0, end: 4, first: 0}),
+            framerate: 1
+        }
+        this.anims.create(config05);
 
         //cars
         this.slingShot = new Car(this, game.config.width/2 - 30, -3628, 'slingshot', 0, 
@@ -153,37 +164,24 @@ class Play extends Phaser.Scene {
         
         //game over flag
         this.gameOver = false;
-    
-        //arcade physics
-        
-        // this.timer = scene.time.addEvent({
-        //     delay: 1000,
-        //     callback: callback,
-        //     //args: [],
-        //     callbackScope: thisArg,
-        //     loop: true
-        // });
         
         //timed event
         this.thirySeconds = false;
 
         this.clock = this.time.delayedCall(30000, () => {
-            console.log('thirty');
             this.thirySeconds = true;  
         });
 
-        this.clock = this.time.delayedCall(45000, () => {
+        //speed up cars 3 times 
+        this.clock = this.time.delayedCall(55000, () => {
             this.addSpeedToObs(this.carsArray);
-            //console.log('spped up 1');
         });
 
-        this.clock = this.time.delayedCall(60000, () => {
+        this.clock = this.time.delayedCall(65000, () => {
             this.addSpeedToObs(this.carsArray);
-            //console.log('spped up 2');
         });
-        this.clock = this.time.delayedCall(75000, () => {
-            this.addSpeedToObs(this.carsArray);
-            //console.log('spped up 3');
+        this.clock = this.time.delayedCall(80000, () => {
+            this.addSpeedToObs(this.carsArray)
         });
         
     }
@@ -228,14 +226,17 @@ class Play extends Phaser.Scene {
         }
 
         if(this.boostedCar && !this.gameOver){
-            //console.log(this.boostedCar.y);
             this.boostedCar.update();
             this.boostAnim.y = this.boostedCar.y;
             this.boostAnim.x = this.boostedCar.x
             if(this.checkCollision(this.p1Wheel, this.boostedArray)){
                 this.EndOfLine();
             }
+            this.checkCollision(this.boostedCar, this.carsArray);
+            this.checkCollision(this.boostedCar, this.obstacleArray);
         }
+
+
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyDOWN)) {
             this.sound.play('sfx_button');
             this.scene.start("menuScene");
@@ -257,8 +258,12 @@ class Play extends Phaser.Scene {
                     collision = true;
             } 
             if(collision == true){
-                console.log(array[i].texture.key);
+                //console.log(array[i].texture.key);
+                this.carExplode(array[i]);
+                array[i].x = -200;
+                array[i].alpha = 1;
                 return true;
+
             }
         }
         return false;
@@ -268,34 +273,27 @@ class Play extends Phaser.Scene {
         //game over function:
         //sets the game to over, adds text, explodes wheel, stops other objects from moving
         this.gameOver = true;
-        //let score = timer.getElapsedSeconds();
-        this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER').setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu')
+        let textConfig = {
+            fontFamily: 'Sunflower',
+            fontSize: '28px',
+            color: '#004FFF',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+        this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', textConfig)
             .setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + 64, '⇡ to Restart or ⇣ for Menu', 
+            textConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'You passed ' + game.settings.gameScore
-             + ' obstacles!').setOrigin(.5);
+             + ' obstacles!', textConfig).setOrigin(.5);
         this.animatedWheel.destroy();
         this.boostAnim.destroy();
         this.wheelExplode(this.p1Wheel);
         this.music.stop();
-    }
-
-    checkOverlap(array) {
-        //unused function that used to check the overlap of a group of obstacles becuase previously both
-        //the x and y postions had some randomness, which caused overlapping
-        for(let i = 0; i < array.length; i ++){
-            for(let j = 0; j < array.length; j ++){
-                if(i != j){
-                    let carA = array[i];
-                    let carB = array[j];
-                    if(this.checkCollision(carA, carB)){
-                        carB.reset(0);
-                        //console.log('car collision has occured and attempted to reset');
-                        //game.settings.gameScore -= 1;
-                    }
-                }
-            }
-        }
     }
 
     addSpeedToObs(array){
@@ -327,6 +325,7 @@ class Play extends Phaser.Scene {
                 array[i].update()
                 if(array[i].y >= game.config.height){
                     array[i].speed = 0;
+                    array[i].x = -200;
                     array[i].destroy();
                 }
             }
@@ -347,5 +346,17 @@ class Play extends Phaser.Scene {
             death.destroy();
         });
         this.sound.play('sfx_lose');
+    }
+
+    carExplode(car){
+        car.alpha = 0; //hide the wheel
+        let crash = this.sound.add('sfx_crash');
+        crash.setVolume(.5);
+        let explode = this.add.sprite(car.x - 45, car.y - 45, 'explode').setOrigin(0, 0);
+        explode.anims.play('explodeAnimation');
+        explode.on('animationcomplete', () => {
+            explode.destroy();
+        });
+        crash.play();
     }
 }
