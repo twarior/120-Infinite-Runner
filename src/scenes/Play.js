@@ -273,12 +273,23 @@ class Play extends Phaser.Scene {
         //game over function:
         //sets the game to over, adds text, explodes wheel, stops other objects from moving
         this.gameOver = true;
-        //let score = timer.getElapsedSeconds();
-        this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER').setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2 + 64, 'UP to Restart or DOWN for Menu')
+        let textConfig = {
+            fontFamily: 'Sunflower',
+            fontSize: '28px',
+            color: '#004FFF',
+            align: 'center',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 0
+        }
+        this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', textConfig)
             .setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 + 64, '⇡ to Restart or ⇣ for Menu', 
+            textConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'You passed ' + game.settings.gameScore
-             + ' obstacles!').setOrigin(.5);
+             + ' obstacles!', textConfig).setOrigin(.5);
         this.animatedWheel.destroy();
         this.boostAnim.destroy();
         this.wheelExplode(this.p1Wheel);
@@ -341,7 +352,7 @@ class Play extends Phaser.Scene {
         car.alpha = 0; //hide the wheel
         let crash = this.sound.add('sfx_crash');
         crash.setVolume(.5);
-        let explode = this.add.sprite(car.x, car.y, 'explode').setOrigin(0, 0);
+        let explode = this.add.sprite(car.x - 45, car.y - 45, 'explode').setOrigin(0, 0);
         explode.anims.play('explodeAnimation');
         explode.on('animationcomplete', () => {
             explode.destroy();

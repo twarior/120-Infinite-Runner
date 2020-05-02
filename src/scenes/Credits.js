@@ -37,7 +37,7 @@ class Credits extends Phaser.Scene {
         this.add.text(centerX, centerY, 'Art: Katarina Kelso', menuConfig).setOrigin(.5);
         this.add.text(centerX, centerY + textSpacer*2, 'Programming: Tennessee Phillips Ward', menuConfig).setOrigin(.5);
         this.add.text(centerX, centerY + textSpacer*4, 'Sound: Kalvin Vinski', menuConfig).setOrigin(.5);
-        this.add.text(centerX, centerY + textSpacer*6, 'Press DOWN to go back to the Menu', menuConfig).setOrigin(.5);
+        this.add.text(centerX, centerY + textSpacer*6, 'Press ⇣ to go back to the Menu', menuConfig).setOrigin(.5);
         // define keys
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
  
