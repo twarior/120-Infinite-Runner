@@ -15,7 +15,12 @@
 //obstacles appear.
 //-Tennessee
 //
-//Artistic Tilt:
+//Artistic Tilt: Like Tennessee, there were a lot of firsts for me. I'd never really used Aseprite before,
+//or even done pixel art really, so this was pretty new as a whole. Making the animations were interesting.
+//It was really cool to see it all come together within the game, though there were complications when I 
+//miscalculated the number of pixels at any point. I also had a mildly difficult time lining up the road, 
+//but overall it was a good time.
+//-Kat
 
 
 let config = {
