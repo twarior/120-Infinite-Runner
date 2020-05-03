@@ -17,7 +17,6 @@ class Play extends Phaser.Scene {
         this.load.image('turtle', './assets/Turtle.png');
         this.load.image('rock', './assets/Rock.png');
         this.load.image('pothole', './assets/Pothole.png');
-        this.load.atlas('krazy8s_atlas', 'Krazy8S_Animation_Atlas', 'Krazy8S.json');
         this.load.spritesheet('wheel', './assets/Wheel.png', {frameWidth: 16, frameHeight: 46, 
             startFrame: 0, endFrame: 3});
         this.load.spritesheet('exclamation', './assets/Exclamation.png', {frameWidth: 20, frameHeight: 40, 
