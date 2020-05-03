@@ -173,18 +173,12 @@ class Play extends Phaser.Scene {
             this.thirySeconds = true;  
         });
 
-        //speed up cars 3 times 
-        this.clock = this.time.delayedCall(55000, () => {
-            this.addSpeedToObs(this.carsArray);
-        });
-
-        this.clock = this.time.delayedCall(65000, () => {
-            this.addSpeedToObs(this.carsArray);
-        });
-        this.clock = this.time.delayedCall(80000, () => {
-            this.addSpeedToObs(this.carsArray)
-        });
-        
+        //speed up cars 6 times 
+        for(let i = 0; i < 6; i++){
+            this.clock = this.time.delayedCall(40000 + (15000*i), () => {
+                this.addSpeedToObs(this.carsArray);
+            });
+        }
     }
     
 
@@ -301,7 +295,7 @@ class Play extends Phaser.Scene {
         //small function that makes the cars go faster (or any array of objects with a speed field)
         for(let i = 0; i < array.length; i++){
             let obs = array[i];
-            obs.speed += 2;
+            obs.speed += 1;
         }
     }
 

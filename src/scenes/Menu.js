@@ -8,6 +8,7 @@ class Menu extends Phaser.Scene {
         this.load.image('menuScreen', './assets/Fire_Tires_Menu.png');
         this.load.audio('sfx_button', './assets/Sounds/ButtonPress(Credits).wav');
         this.load.audio('sfx_play', './assets/Sounds/Doppler1.wav');
+        this.load.audio('music_dmv', './assets/Sounds/VertattheDMVChiptune.wav');
     }
 
     create() {
@@ -23,6 +24,12 @@ class Menu extends Phaser.Scene {
             },
             fixedWidth: 0
         }
+
+        //dmv music
+        this.music = this.sound.add('music_dmv');
+        this.music.setLoop(true);
+        this.music.play();
+
 
         //show menu text
         let centerX = game.config.width/2;
@@ -47,11 +54,12 @@ class Menu extends Phaser.Scene {
     update() {
         //if the player presses the up arrow the game will start
         if (Phaser.Input.Keyboard.JustDown(keyUP)) {
-            
+            this.music.stop();
             this.scene.start("playScene");
             this.sound.play('sfx_play');  
         }
         else if (Phaser.Input.Keyboard.JustDown(keyDOWN)) {
+            this.music.stop();
             this.sound.play('sfx_button');
             this.scene.start("creditsScene");    
         }
