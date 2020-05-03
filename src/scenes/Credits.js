@@ -13,6 +13,7 @@ class Credits extends Phaser.Scene {
         this.load.image('roadrunner', './assets/PlymouthRoadrunner.png');
         this.load.image('ballistik', './assets/Ballistik.png');
         this.load.image('lightning', './assets/GreasedLightning.png');
+        this.load.atlas('krazy8_atlas', './assets/Krazy8S_Atlas.png', './assets/Krazy8S.json');
     }
     
     create() {
@@ -24,10 +25,19 @@ class Credits extends Phaser.Scene {
         //car images
         var sling = this.add.image(35, 35, 'slingshot').setOrigin(0, 0);
         var deora = this.add.image(450, 35, 'deoraII').setOrigin(0, 0);
-        var krazy = this.add.image(240, 35, 'krazy8s').setOrigin(0, 0);
+        //var krazy = this.add.image(240, 35, 'krazy8s').setOrigin(0, 0);
         var road = this.add.image(35, 750, 'roadrunner').setOrigin(0, 0);
         var ball = this.add.image(240, 750, 'ballistik').setOrigin(0, 0);
         var light = this.add.image(450, 750, 'lightning').setOrigin(0, 0);
+        this.krazy = this.add.sprite(240, 35, 'krazy8_atlas').setOrigin(0, 0);
+
+        this.anims.create({
+            key: 'boost',
+            frames: this.anims.generateFrameNames('krazy8_atlas', {prefix: 'Krazy8S_', 
+                start: 1, end: 6, zeroPad: 0}),
+            frameRate: 10, 
+            repeat: -1
+        });
 
         //credits display
         let menuConfig = {
@@ -63,5 +73,6 @@ class Credits extends Phaser.Scene {
             this.music.stop();
             this.scene.start("menuScene");    
         }
+        this.krazy.anims.play('boost', true);
     }
 }
