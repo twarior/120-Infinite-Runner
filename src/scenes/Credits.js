@@ -34,7 +34,7 @@ class Credits extends Phaser.Scene {
         this.anims.create({
             key: 'boost',
             frames: this.anims.generateFrameNames('krazy8_atlas', {prefix: 'Krazy8S_', 
-                start: 1, end: 6, zeroPad: 0}),
+                start: 1, end: 6, zeroPad: 1}),
             frameRate: 10, 
             repeat: -1
         });
