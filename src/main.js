@@ -5,7 +5,7 @@
 //Nathan Altice Rocket Patrol referenced for starting code
 //
 //Technical Tilt: A lot of these things were firsts for me even if they were part of the class examples.
-//I think one of the trickier things for me was making the nimations play at specific times or getting 
+//I think one of the trickier things for me was making the animations play at specific times or getting 
 //timed events to occur. One thing I think was a little more interesting was getting a different set of 
 //sprites to appear without just deleting the old ones. At first I had several issues with the old sprites 
 //still colliding with the player even though they were supposed to be gone, so I moved them off screen and 
@@ -21,6 +21,12 @@
 //miscalculated the number of pixels at any point. I also had a mildly difficult time lining up the road, 
 //but overall it was a good time.
 //-Kat
+/*Creative Tilt: Created the music. First time doing a cover of a song. Main theme was difficult due to the
+complexity of the original song and the fact that it was (seemingly) a live performance, as the timing of 
+certain isntruments was imperfect and there were odd melodic variations. These oddities don't translate well 
+to a computer-generated song, so very specific edits and improvisation was necessary.
+-Kalvin
+*/
 
 
 let config = {
