@@ -1,8 +1,21 @@
 //Tennessee Phillips Ward, Katarina Kelso, Kalvin Vinski
 //
-//Infinite Runner for 120 Series
+//Fire Tires - May 2020
 //
 //Nathan Altice Rocket Patrol referenced for starting code
+//
+// Technical Tilt: A lot of these things were firsts for me even if they were part of the class examples.
+// I think one of the trickier things for me was making the nimations play at specific times or getting 
+// timed events to occur. One thing I think was a little more interesting was getting a different set of 
+//sprites to appear without just deleting the old ones. At first I had several issues with the old sprite 
+//still colliding with the splayer even though they had been destroyed, so I moved them off screen and 
+//set their speed to 0 before trying to destroy them. This still meant that they would kinda just 'poof'
+//out of existance so I created a method which allowed them to fully go off screen one more time without
+//resseting their position. I then give the player a couple seconds before the harder obstacles appear.
+//-Tennessee
+//
+//Artistic Tilt:
+
 
 let config = {
     type: Phaser.CANVAS,

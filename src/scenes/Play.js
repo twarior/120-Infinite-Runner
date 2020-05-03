@@ -257,7 +257,6 @@ class Play extends Phaser.Scene {
                 array[i].x = -200;
                 array[i].alpha = 1;
                 return true;
-
             }
         }
         return false;
