@@ -30,6 +30,11 @@ class Menu extends Phaser.Scene {
         this.music.setLoop(true);
         this.music.play();
 
+        this.input.addDownCallback(function() {			
+	    if (game.sound.context.state === 'suspended') {
+		game.sound.context.resume();
+	    }			
+	});
 
         //show menu text
         let centerX = game.config.width/2;
